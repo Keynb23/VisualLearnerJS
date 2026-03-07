@@ -1,12 +1,51 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useEffect, useRef } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export const Route = createFileRoute("/")({
   component: Index,
 });
 
 function Index() {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Fade in feature cards on scroll
+      gsap.from(".FeatureCard", {
+        scrollTrigger: {
+          trigger: ".FeatureGrid",
+          start: "top 80%",
+          toggleActions: "play none none reverse",
+        },
+        y: 50,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.1,
+        ease: "power3.out",
+      });
+
+      // Simple parallax for Hero
+      gsap.to(".HeroSection", {
+        scrollTrigger: {
+          trigger: ".HeroSection",
+          start: "top top",
+          end: "bottom top",
+          scrub: true,
+        },
+        y: 100,
+        opacity: 0.5,
+      });
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <div className="PageContainer flex flex-col p-8 lg:p-12">
+    <div ref={containerRef} className="PageContainer flex flex-col p-8 lg:p-12">
       <div className="HeroSection max-w-2xl">
         <h1 className="Title text-5xl font-extrabold tracking-tight lg:text-6xl text-foreground">
           The <span className="TextHighlight text-primary">Visual</span>{" "}
@@ -18,12 +57,16 @@ function Index() {
           visualizers.
         </p>
         <div className="ActionButtons mt-10 flex flex-wrap gap-4">
-          <button className="PrimaryActionButton bg-primary text-background px-8 py-4 rounded-full font-bold hover:scale-105 transition-transform shadow-lg shadow-primary/20">
-            Start Learning
-          </button>
-          <button className="SecondaryActionButton border border-border px-8 py-4 rounded-full font-bold hover:bg-muted transition-colors backdrop-blur-sm">
-            View Playground
-          </button>
+          <Link to="/lessons">
+            <button className="PrimaryActionButton bg-primary text-background px-8 py-4 rounded-full font-bold hover:scale-105 transition-transform shadow-lg shadow-primary/20">
+              Start Learning
+            </button>
+          </Link>
+          <Link to="/playground">
+            <button className="SecondaryActionButton border border-border px-8 py-4 rounded-full font-bold hover:bg-muted transition-colors backdrop-blur-sm">
+              View Playground
+            </button>
+          </Link>
         </div>
       </div>
 

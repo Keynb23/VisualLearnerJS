@@ -16,6 +16,7 @@ export function ModeToggle() {
     <TooltipTrigger>
       <Button
         onPress={toggleMode}
+        aria-label={`Switch to ${mode === "light" ? "dark" : "light"} mode`}
         className="ModeToggleButton p-2 rounded-full border border-border bg-card/50 backdrop-blur-md hover:bg-muted transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
       >
         <AnimatePresence mode="wait">
@@ -42,7 +43,11 @@ export function ModeToggle() {
           )}
         </AnimatePresence>
       </Button>
-      <Tooltip className="Tooltip bg-card border border-border p-3 rounded-lg shadow-xl max-w-xs text-xs">
+      <Tooltip
+        placement="bottom end"
+        offset={8}
+        className="Tooltip bg-card border border-border p-3 rounded-lg shadow-xl max-w-xs text-xs z-50 animate-in fade-in zoom-in-95 duration-200"
+      >
         <OverlayArrow>
           <svg
             width={8}
@@ -55,14 +60,12 @@ export function ModeToggle() {
         </OverlayArrow>
         <div className="EducationalLogic space-y-2">
           <p className="LogicTitle font-bold text-primary">
-            JavaScript Engine State Logic:
+            JavaScript Engine State:
           </p>
-          <p className="LogicDescription">
-            When you click, `zustand` triggers a state mutation. The
-            `injectCSSVariables` function then updates the DOM's `:root` styles
-            using `document.documentElement.style.setProperty`. This dynamically
-            re-calculates OKLCH values in real-time, causing a CSS repaint
-            without a browser reload.
+          <p className="LogicDescription leading-tight">
+            `zustand` triggers a state mutation. `injectCSSVariables` then
+            updates `:root` styles via `setProperty`. This re-calculates OKLCH
+            values in real-time, causing a CSS repaint.
           </p>
         </div>
       </Tooltip>

@@ -1,58 +1,39 @@
-🗺️ Project Game Plan: The Visual Textbook
+# 🗺️ Project Game Plan: The Visual Textbook
 Status Key: > 🔲 To Do | 🏗️ In Progress | ✅ Completed
 
-Phase 1: The Foundation (Skeleton)
-[ ] Dependency Injection: Install and verify all packages listed in @techStack.md.
+## Phase 1: The Foundation (Skeleton)
+- [ ] **Dependency Injection:** Install and verify all packages listed in @techStack.md.
+- [ ] **Architecture Setup:**
+    - [ ] Initialize TanStack Router (File-based).
+    - [ ] Setup Zustand store (Theme, Performance, App State).
+    - [ ] Configure Tailwind with OKLCH CSS variable support.
+- [ ] **The "Logic" Shell:**
+    - [ ] Build `MainLayout` with glassmorphic sidebar and Apple-style minimalism.
+    - [ ] Implement Light/Dark toggle with "Code Explanation" tooltip (hover to see code).
+    - [ ] Enforce `className="Prefix tailwind..."` across all base components.
 
-[ ] Architecture Setup:
+## Phase 2: Environment & Performance (The Rosetta Core)
+- [ ] **Explanation Engine Implementation:**
+    - [ ] Build the side-by-side split view (Code on Left / English on Right).
+    - [ ] Color-code lines to match the tooltip highlighting.
+    - [ ] Build the "Deep Dive" Modal (React Aria) for granular logic explanations.
+- [ ] **The Background Engine:**
+    - [ ] Build 3 Background options (SVG, Canvas, R3F Gradient).
+    - [ ] Build the Performance Controller (Speed slider + On/Off toggle).
+- [ ] **The Theme Engine:**
+    - [ ] Implement the 20 curated OKLCH presets.
+    - [ ] Build the Custom Palette Creator (Color wheel for Primary/Secondary/Accent).
+    - [ ] Implement auto-generation logic for contrast-safe Grayscale based on Primary color.
 
-[ ] Initialize TanStack Router (File-based routing).
+## Phase 3: The Educational Core
+- [ ] **The Stack Visualizer:**
+    - [ ] "Library Map": Interactive nodes for the tech stack (Zustand, Jotai, etc.).
+    - [ ] Add Professional Context: Explain how these scale in production.
+- [ ] **The Syntax Encyclopedia:**
+    - [ ] Checklist of JS/TS concepts (Closures, Hoisting, Generics, etc.).
+    - [ ] Build interactive "Visual Analogies" for each syntax concept.
 
-[ ] Setup Zustand store for Theme and Global State.
-
-[ ] Configure Tailwind with OKLCH variable support.
-
-[ ] The "Logic" Shell:
-
-[ ] Build MainLayout with Apple-inspired minimalist sidebar.
-
-[ ] Implement Light/Dark toggle with "Code Explanation" tooltip.
-
-[ ] Verify className="Prefix tailwind..." naming convention across all components.
-
-Phase 2: Environment & Performance
-[ ] The Background Engine:
-
-[ ] Create 3 lightweight animated backgrounds (SVG Path, Canvas particles, and a subtle R3F gradient).
-
-[ ] Build the Performance Controller: Toggle for "Static vs. Animated" and a "Speed" slider.
-
-[ ] The Theme Engine:
-
-[ ] Pre-set 20 curated OKLCH color variants (e.g., "Midnight Neon", "Nordic Forest").
-
-[ ] Build the Custom Palette Creator: Color wheel for Primary/Secondary/Accent.
-
-[ ] Logic: Auto-calculate contrast-safe Grayscale based on Primary color.
-
-Phase 3: The Educational Core
-[ ] The Stack Visualizer:
-
-[ ] "Library Map": Interactive nodes for each library (Zustand, Jotai, etc.).
-
-[ ] Professional Context: Explanations of how these tools scale in production codebases.
-
-[ ] The Syntax Encyclopedia:
-
-[ ] Comprehensive checklist of JS/TS concepts (Closures, Hoisting, Generics, etc.).
-
-[ ] Interactive "Visual Analogies" for each concept.
-
-Phase 4: The Playground
-[ ] The Sandpack Integration:
-
-[ ] Create a live-code editor environment.
-
-[ ] Support for React + TypeScript + Tailwind CSS rendering in real-time.
-
-[ ] "Copy to Clipboard" feature for playground snippets.
+## Phase 4: The Playground
+- [ ] **Sandpack Integration:**
+    - [ ] Live-code environment supporting React, TS, and Tailwind.
+    - [ ] Add "Copy to Clipboard" for snippets.

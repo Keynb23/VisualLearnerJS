@@ -1,21 +1,25 @@
-# Visual & Interaction Design System
+# 🎨 Visual & Interaction Design System
 
-## Design Philosophy
-- **Aesthetic:** Apple-inspired minimalism fused with "alive" interactive elements.
-- **Atmosphere:** Deep glassmorphism and soft neumorphic depth. Clean, organized, and hyper-legible.
+## 🍏 Aesthetic Guidelines
+- **Philosophy:** Apple-inspired minimalism. High-fidelity, sleek, and elegant.
+- **Vibe:** "Living" UI. Subtle glassmorphism, backdrop blurs, and neumorphic depth.
+- **Default:** Dark Mode (Light Mode via toggle).
 
-## Theme Engine (OKLCH)
-- **Default:** Dark Mode.
-- **Presets:** 20 curated OKLCH themes (e.g., Midnight, Forest, Cyberpunk).
-- **Customization:** A color wheel for Primary, Secondary, and Accent.
-- **Auto-Logic:** Grayscale (Whites/Blacks/Grays) must be dynamically generated based on the Primary OKLCH hue to ensure perfect color harmony.
-- **Logic Toggle:** The Light/Dark mode button must feature a tooltip explaining the React/JS logic behind the theme shift.
+## 🌈 The OKLCH Theme Engine
+- **The Core:** All color variables must be defined using `oklch()`.
+- **Presets:** 20 curated OKLCH themes (e.g., "Midnight Neon", "Nordic Forest").
+- **Customization Logic:** - User picks Primary, Secondary, and Accent hues.
+    - System **must** auto-calculate Grayscale (Blacks, Whites, Grays) by shifting the Primary color's Lightness while maintaining its Hue for visual harmony.
+- **Visual Feedback:** The Light/Dark toggle MUST trigger a tooltip showing the specific React state code used for the switch.
 
-## Backgrounds & Animation
-- **Animated Backgrounds:** 3 selectable options (Minimal, Interactive, and 3D).
-- **Performance Control:** Include a UI slider for animation speed and a toggle to disable backgrounds for low-end hardware.
-- **Motion:** GSAP for complex timelines (concept visualizations) and Framer Motion for UI micro-interactions.
+## 🕹️ Motion & Performance
+- **Backgrounds:** 3 selectable modes:
+    1. **SVG Path:** Lightweight vector motion.
+    2. **Canvas:** High-performance particle system.
+    3. **R3F Gradient:** Interactive 3D noise/gradient meshes.
+- **Performance Controller:** UI slider for animation speed and a master toggle to disable heavy visuals for low-performance machines.
+- **Standard:** Use GSAP for high-precision logic visualizers; Framer Motion for standard UI state changes.
 
-## User Experience
-- **Clarity:** Avoid "Visual Noise." Every animation must serve an educational or navigational purpose.
-- **Interactive Textbook:** The site must feel like a physical object that reacts to the user's touch and code input.
+## 📖 Educational Layout
+- **Organization:** Clean, zero-clutter, intuitive navigation.
+- **Interaction:** Every element should feel tactile and responsive to user input.

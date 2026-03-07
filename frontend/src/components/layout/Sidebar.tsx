@@ -17,7 +17,7 @@ export function Sidebar() {
   ];
 
   return (
-    <aside className="Sidebar sticky top-0 h-screen w-64 border-r border-border bg-card/50 backdrop-blur-xl flex flex-col p-4">
+    <aside className="Sidebar sticky top-0 h-screen w-64 border-r border-border bg-card/80 backdrop-blur-2xl flex flex-col p-4 shadow-xl z-20">
       <div className="LogoContainer mb-8 flex items-center gap-2 px-2">
         <div className="Logo flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-background font-bold tracking-tighter">
           AG
