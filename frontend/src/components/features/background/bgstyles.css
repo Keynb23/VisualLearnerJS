@@ -1,17 +1,16 @@
-.DefaultBG:before {
-  background-size: cover;
-  background-position: center;
-  background-image: url("../../../assets/defaultBG.jpg");
-  background-repeat: no-repeat;
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-
+/*
+ * GifMask Background Styles
+ *
+ * The ink mask GIF is applied directly to the .GifMaskBackground container.
+ * This clips all child image layers through the animated mask shape,
+ * creating the ink-reveal effect as the GIF plays.
+ */
+.GifMaskBackground {
   -webkit-mask-image: url("../../../assets/inkMask.gif");
   -webkit-mask-size: cover;
   -webkit-mask-position: center;
   -webkit-mask-repeat: no-repeat;
+
   mask-image: url("../../../assets/inkMask.gif");
   mask-size: cover;
   mask-position: center;

@@ -1,13 +1,17 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { oklch, formatCss } from "culori";
+
+// ─── Types ────────────────────────────────────────────────────────────────────
 
 type ThemeMode = "light" | "dark";
 
+/** The four background engine modes, ordered lightest → heaviest */
+export type BackgroundMode = "static" | "gifmask" | "depth" | "interactive";
+
 interface ColorState {
-  l: number;
-  c: number;
-  h: number;
+  l: number; // Lightness  0–1
+  c: number; // Chroma     0–0.4
+  h: number; // Hue        0–360
 }
 
 interface ThemePreset {
@@ -19,7 +23,7 @@ interface ThemePreset {
 
 interface PerformanceState {
   enabled: boolean;
-  speed: number; // 0.1 to 2.0
+  speed: number; // 0.1 (slowest) to 2.0 (fastest)
 }
 
 interface ThemeStore {
@@ -29,7 +33,8 @@ interface ThemeStore {
   accentColor: ColorState;
   performance: PerformanceState;
   currentPreset: string;
-  backgroundMode: "svg" | "canvas" | "r3f";
+  backgroundMode: BackgroundMode;
+
   setMode: (mode: ThemeMode) => void;
   toggleMode: () => void;
   setPrimaryColor: (color: ColorState) => void;
@@ -37,9 +42,11 @@ interface ThemeStore {
   setAccentColor: (color: ColorState) => void;
   setPerformance: (performance: Partial<PerformanceState>) => void;
   setPreset: (presetName: string) => void;
-  setBackgroundMode: (mode: "svg" | "canvas" | "r3f") => void;
+  setBackgroundMode: (mode: BackgroundMode) => void;
   injectCSSVariables: () => void;
 }
+
+// ─── Presets ──────────────────────────────────────────────────────────────────
 
 export const THEME_PRESETS: ThemePreset[] = [
   {
@@ -164,53 +171,67 @@ export const THEME_PRESETS: ThemePreset[] = [
   },
 ];
 
-const toOklchString = (l: number, c: number, h: number) => {
-  return `${(l * 100).toFixed(2)}% ${c.toFixed(3)} ${h.toFixed(2)}`;
-};
+// ─── Helpers ──────────────────────────────────────────────────────────────────
+
+/** Converts a ColorState into an OKLCH CSS string: "60.00% 0.150 250.00" */
+const toOklchString = (l: number, c: number, h: number) =>
+  `${(l * 100).toFixed(2)}% ${c.toFixed(3)} ${h.toFixed(2)}`;
+
+// ─── Store ────────────────────────────────────────────────────────────────────
 
 export const useThemeStore = create<ThemeStore>()(
   persist(
     (set, get) => ({
+      // ── Initial State ──────────────────────────────────────────────────────
       mode: "dark",
       primaryColor: THEME_PRESETS[0].primary,
       secondaryColor: THEME_PRESETS[0].secondary,
       accentColor: THEME_PRESETS[0].accent,
       performance: { enabled: true, speed: 1.0 },
       currentPreset: THEME_PRESETS[0].name,
-      backgroundMode: "svg",
+      backgroundMode: "static",
 
+      // ── Actions ───────────────────────────────────────────────────────────
+
+      /** Switch between light and dark mode, then re-inject CSS variables */
       setMode: (mode) => {
         set({ mode });
         get().injectCSSVariables();
       },
 
+      /** Toggle between light and dark mode */
       toggleMode: () => {
         const newMode = get().mode === "light" ? "dark" : "light";
         set({ mode: newMode });
         get().injectCSSVariables();
       },
 
+      /** Update the primary OKLCH color and re-inject CSS variables */
       setPrimaryColor: (color) => {
         set({ primaryColor: color, currentPreset: "Custom" });
         get().injectCSSVariables();
       },
 
+      /** Update the secondary OKLCH color and re-inject CSS variables */
       setSecondaryColor: (color) => {
         set({ secondaryColor: color, currentPreset: "Custom" });
         get().injectCSSVariables();
       },
 
+      /** Update the accent OKLCH color and re-inject CSS variables */
       setAccentColor: (color) => {
         set({ accentColor: color, currentPreset: "Custom" });
         get().injectCSSVariables();
       },
 
+      /** Partial-update the performance state (enabled, speed) */
       setPerformance: (performance) => {
         set((state) => ({
           performance: { ...state.performance, ...performance },
         }));
       },
 
+      /** Apply a named theme preset and re-inject CSS variables */
       setPreset: (name) => {
         const preset = THEME_PRESETS.find((p) => p.name === name);
         if (preset) {
@@ -224,88 +245,70 @@ export const useThemeStore = create<ThemeStore>()(
         }
       },
 
+      /** Switch the active background engine mode */
       setBackgroundMode: (mode) => set({ backgroundMode: mode }),
 
+      /**
+       * Injects all OKLCH color values as CSS custom properties on <html>.
+       * Also sets/removes the "dark" class for Tailwind's dark-mode variant.
+       * Uses requestAnimationFrame for smooth updates during slider dragging.
+       */
       injectCSSVariables: () => {
         if (typeof window === "undefined") return;
 
-        // Use requestAnimationFrame for smoother updates during dragging
         requestAnimationFrame(() => {
           const { mode, primaryColor, secondaryColor, accentColor } = get();
           const root = document.documentElement;
 
-          // Update class for tailwind dark mode
-          if (mode === "dark") {
-            root.classList.add("dark");
-          } else {
-            root.classList.remove("dark");
-          }
+          // Toggle Tailwind dark-mode class
+          root.classList.toggle("dark", mode === "dark");
 
-          // Inject colors
-          root.style.setProperty(
-            "--primary",
-            toOklchString(primaryColor.l, primaryColor.c, primaryColor.h)
-          );
-          root.style.setProperty(
-            "--secondary",
-            toOklchString(secondaryColor.l, secondaryColor.c, secondaryColor.h)
-          );
-          root.style.setProperty(
-            "--accent",
-            toOklchString(accentColor.l, accentColor.c, accentColor.h)
-          );
+          // Inject brand colors
+          root.style.setProperty("--primary",   toOklchString(primaryColor.l,   primaryColor.c,   primaryColor.h));
+          root.style.setProperty("--secondary", toOklchString(secondaryColor.l, secondaryColor.c, secondaryColor.h));
+          root.style.setProperty("--accent",    toOklchString(accentColor.l,    accentColor.c,    accentColor.h));
 
-          // Generate matching grayscales (Harmonious Tinted Grays)
-          const { l, c, h } = primaryColor;
-          // Use slightly more chroma for grays to keep them "harmonious" but visible
+          // Generate harmonious tinted grays — slight chroma ties them to the primary hue
+          const { c, h } = primaryColor;
           const grayChroma = Math.min(c * 0.15, 0.015);
 
           if (mode === "light") {
-            root.style.setProperty(
-              "--background",
-              toOklchString(0.99, grayChroma, h)
-            );
-            root.style.setProperty(
-              "--foreground",
-              toOklchString(0.1, grayChroma, h)
-            );
-            root.style.setProperty("--card", toOklchString(1.0, 0, 0));
-            root.style.setProperty(
-              "--muted",
-              toOklchString(0.96, grayChroma, h)
-            );
-            root.style.setProperty(
-              "--border",
-              toOklchString(0.9, grayChroma, h)
-            );
+            root.style.setProperty("--background", toOklchString(0.99, grayChroma, h));
+            root.style.setProperty("--foreground", toOklchString(0.1,  grayChroma, h));
+            root.style.setProperty("--card",       toOklchString(1.0,  0,          0));
+            root.style.setProperty("--muted",      toOklchString(0.96, grayChroma, h));
+            root.style.setProperty("--border",     toOklchString(0.9,  grayChroma, h));
           } else {
-            // Dark Mode Refinements for Visibility
-            root.style.setProperty(
-              "--background",
-              toOklchString(0.12, grayChroma, h)
-            );
-            root.style.setProperty(
-              "--foreground",
-              toOklchString(0.99, grayChroma, h)
-            );
-            root.style.setProperty(
-              "--card",
-              toOklchString(0.16, grayChroma, h)
-            );
-            root.style.setProperty(
-              "--muted",
-              toOklchString(0.2, grayChroma, h)
-            );
-            root.style.setProperty(
-              "--border",
-              toOklchString(0.25, grayChroma, h)
-            );
+            root.style.setProperty("--background", toOklchString(0.12, grayChroma, h));
+            root.style.setProperty("--foreground", toOklchString(0.99, grayChroma, h));
+            root.style.setProperty("--card",       toOklchString(0.16, grayChroma, h));
+            root.style.setProperty("--muted",      toOklchString(0.2,  grayChroma, h));
+            root.style.setProperty("--border",     toOklchString(0.25, grayChroma, h));
           }
         });
       },
     }),
     {
       name: "theme-storage",
+      version: 2,
+      /**
+       * Migrate persisted state from v1 → v2.
+       * v1 backgroundMode: "svg" | "canvas" | "r3f"
+       * v2 backgroundMode: "static" | "interactive" | "depth"
+       */
+      migrate: (persistedState, version) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const state = persistedState as any;
+        if (version < 2) {
+          const modeMap: Record<string, BackgroundMode> = {
+            svg:    "static",
+            canvas: "interactive",
+            r3f:    "depth",
+          };
+          state.backgroundMode = modeMap[state.backgroundMode as string] ?? "static";
+        }
+        return state as ThemeStore;
+      },
       onRehydrateStorage: () => (state) => {
         state?.injectCSSVariables();
       },
