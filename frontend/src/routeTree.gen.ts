@@ -11,7 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as StackRouteImport } from './routes/stack'
 import { Route as PlaygroundRouteImport } from './routes/playground'
-import { Route as LessonsRouteImport } from './routes/lessons'
+import { Route as ExamplesRouteImport } from './routes/examples'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 
@@ -25,9 +25,9 @@ const PlaygroundRoute = PlaygroundRouteImport.update({
   path: '/playground',
   getParentRoute: () => rootRouteImport,
 } as any)
-const LessonsRoute = LessonsRouteImport.update({
-  id: '/lessons',
-  path: '/lessons',
+const ExamplesRoute = ExamplesRouteImport.update({
+  id: '/examples',
+  path: '/examples',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AboutRoute = AboutRouteImport.update({
@@ -44,14 +44,14 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/lessons': typeof LessonsRoute
+  '/examples': typeof ExamplesRoute
   '/playground': typeof PlaygroundRoute
   '/stack': typeof StackRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/lessons': typeof LessonsRoute
+  '/examples': typeof ExamplesRoute
   '/playground': typeof PlaygroundRoute
   '/stack': typeof StackRoute
 }
@@ -59,22 +59,22 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/lessons': typeof LessonsRoute
+  '/examples': typeof ExamplesRoute
   '/playground': typeof PlaygroundRoute
   '/stack': typeof StackRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/lessons' | '/playground' | '/stack'
+  fullPaths: '/' | '/about' | '/examples' | '/playground' | '/stack'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/lessons' | '/playground' | '/stack'
-  id: '__root__' | '/' | '/about' | '/lessons' | '/playground' | '/stack'
+  to: '/' | '/about' | '/examples' | '/playground' | '/stack'
+  id: '__root__' | '/' | '/about' | '/examples' | '/playground' | '/stack'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
-  LessonsRoute: typeof LessonsRoute
+  ExamplesRoute: typeof ExamplesRoute
   PlaygroundRoute: typeof PlaygroundRoute
   StackRoute: typeof StackRoute
 }
@@ -95,11 +95,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PlaygroundRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/lessons': {
-      id: '/lessons'
-      path: '/lessons'
-      fullPath: '/lessons'
-      preLoaderRoute: typeof LessonsRouteImport
+    '/examples': {
+      id: '/examples'
+      path: '/examples'
+      fullPath: '/examples'
+      preLoaderRoute: typeof ExamplesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/about': {
@@ -122,7 +122,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
-  LessonsRoute: LessonsRoute,
+  ExamplesRoute: ExamplesRoute,
   PlaygroundRoute: PlaygroundRoute,
   StackRoute: StackRoute,
 }

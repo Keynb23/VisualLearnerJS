@@ -1,0 +1,16 @@
+Navigating...
+PAGE LOG: [vite] connecting...
+PAGE LOG: [vite] connected.
+PAGE LOG: %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+Scrolling down...
+Waiting for animation to complete...
+Cards state: [
+  { opacity: '1', transform: 'translate(0px, 0px)' },
+  { opacity: '1', transform: 'translate(0px, 0px)' },
+  { opacity: '1', transform: 'translate(0px, 0px)' },
+  { opacity: '1', transform: 'translate(0px, 0px)' },
+  { opacity: '1', transform: 'translate(0px, 0px)' },
+  { opacity: '1', transform: 'translate(0px, 0px)' }
+]
+Hero state: { opacity: '0.5', transform: 'translate(0px, 100px)' }
+Screenshot saved to screenshot.png

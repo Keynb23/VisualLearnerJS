@@ -3,6 +3,7 @@ import { Sidebar } from "@/components/layout/Sidebar";
 import { ModeToggle } from "../ui/ModeToggle";
 import { useThemeStore } from "../../store/useThemeStore";
 import { SVGBackground } from "../features/background/SVGBackground";
+import { DefaultBG } from "../features/background/defaultBG";
 import { CanvasBackground } from "../features/background/CanvasBackground";
 import { R3FBackground } from "../features/background/R3FBackground";
 
@@ -14,7 +15,7 @@ function ActiveBackground() {
     case "r3f":
       return <R3FBackground />;
     default:
-      return <SVGBackground />;
+      return <DefaultBG />;
   }
 }
 

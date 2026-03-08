@@ -1,0 +1,19 @@
+.DefaultBG:before {
+  background-size: cover;
+  background-position: center;
+  background-image: url("../../../assets/defaultBG.jpg");
+  background-repeat: no-repeat;
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+
+  -webkit-mask-image: url("../../../assets/inkMask.gif");
+  -webkit-mask-size: cover;
+  -webkit-mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-image: url("../../../assets/inkMask.gif");
+  mask-size: cover;
+  mask-position: center;
+  mask-repeat: no-repeat;
+}
