@@ -1,12 +1,18 @@
 import {
   ColorSlider as AriaColorSlider,
   ColorSliderProps as AriaColorSliderProps,
+  Label,
   SliderOutput,
   SliderTrack
 } from 'react-aria-components';
-import {Label} from './Form';
-import {ColorThumb} from './ColorThumb';
+import { SliderThumb } from 'react-aria-components';
 import './ColorSlider.css';
+
+function ColorThumb() {
+  return (
+    <SliderThumb className="h-4 w-4 top-1/2 bg-white border-2 border-primary rounded-full shadow-md outline-none focus-visible:ring-2 focus-visible:ring-primary" />
+  );
+}
 
 export interface ColorSliderProps extends AriaColorSliderProps {
   label?: string;

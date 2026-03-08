@@ -53,7 +53,7 @@ function Playground() {
         </div>
       </header>
 
-      <div className="flex-1 min-h-0">
+      <div className="flex-1 min-h-0 [&_.sp-wrapper]:h-full [&_.sp-layout]:h-full [&_.sp-stack]:h-full">
         <SandpackProvider
           template="react"
           theme="dark"
