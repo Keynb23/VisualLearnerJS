@@ -11,8 +11,7 @@ import {
 export function Sidebar() {
   const navItems = [
     { label: "Dashboard", icon: LayoutDashboard, to: "/" },
-    { label: "Lessons", icon: BookOpen, to: "/lessons" },
-    { label: "Stack Visualizer", icon: Layers, to: "/stack" },
+    { label: "Examples", icon: Layers, to: "/examples" },
     { label: "Playground", icon: Terminal, to: "/playground" },
   ];
 
@@ -40,16 +39,6 @@ export function Sidebar() {
           </Link>
         ))}
       </nav>
-
-      <div className="SidebarFooter mt-auto border-t border-border pt-4">
-        <Link
-          to="/about"
-          className="NavLink group flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors hover:bg-muted"
-        >
-          <Info className="NavIcon h-4 w-4" />
-          <span>About</span>
-        </Link>
-      </div>
     </aside>
   );
 }

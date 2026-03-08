@@ -57,7 +57,7 @@ function Index() {
           visualizers.
         </p>
         <div className="ActionButtons mt-10 flex flex-wrap gap-4">
-          <Link to="/lessons">
+          <Link to="/examples">
             <button className="PrimaryActionButton bg-primary text-background px-8 py-4 rounded-full font-bold hover:scale-105 transition-transform shadow-lg shadow-primary/20">
               Start Learning
             </button>
@@ -153,15 +153,6 @@ function Index() {
             </p>
           </div>
         </div>
-      </div>
-
-      <div className="FooterCTA mt-40 mb-20 text-center p-16 rounded-[3rem] bg-linear-to-b from-primary/5 to-transparent border border-primary/10">
-        <h2 className="CTATitle text-3xl font-bold mb-6">
-          Ready to see code in a new light?
-        </h2>
-        <button className="CTALink bg-foreground text-background px-10 py-5 rounded-full font-bold hover:scale-105 transition-transform">
-          Join the Educational Revolution
-        </button>
       </div>
     </div>
   );

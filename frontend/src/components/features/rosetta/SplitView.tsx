@@ -53,18 +53,18 @@ export function SplitView({
       {/* Explanation Side */}
       <div className="ExplanationPanel p-8 flex flex-col justify-center">
         <div className="PanelHeader text-primary mb-6">
-          <span className="Label uppercase tracking-widest text-[10px] font-bold">
+          <span className="Label uppercase tracking-widest text-xl underline decoration-primary decoration-2 font-bold">
             English Translation
           </span>
         </div>
-        <div className="ExplanationContent space-y-6">
+        <div className="ExplanationContent text-foreground/90 font-semibold leading-relaxed space-y-6">
           {explanationLines.map((line, i) => (
             <motion.p
               key={i}
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: i * 0.1 }}
-              className="TextLine text-lg text-foreground/80 leading-relaxed font-light"
+              className="TextLine text-md text-foreground/90 leading-relaxed font-semibold"
             >
               {line}
             </motion.p>
